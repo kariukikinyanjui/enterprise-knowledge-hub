@@ -5,6 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 
 from rag.models import Document
+from rag.services import IngestionService, CharOrchestrationService
 from .serializers import DocumentSerializer, ChatQuerySerializer
 
 
@@ -34,7 +35,11 @@ class DocumentViewSet(viewsets.ModelViewSet):
         """
         document = serializer.save(tenant=self.request.user.tenant)
 
-        # TODO: Trigger the RAG Extension Service here.
+        # Trigger the Ingestion Service
+        uploaded_file = self.request.FILES.get('file')
+        if uploaded_file:
+            ingestion_service = IngestionService()
+            ingestion_service.process_document(document, uploaded_file)
 
         return document
 
@@ -58,14 +63,8 @@ class ChatAPIView(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-            # TODO: Trigger the RAG Generation Service here.
-            # Embed user_query
-            # Vector search pgvector for tenant's DocumentChunks
-            # Call Amazon Bedrock with prompt + context
+            # Execute the Chat Orchestration Service
+            chat_service = ChatOrchestrationService()
+            response_data = chat_service.answer_query(user_query, tenant)
 
-            mock_response = {
-                "answer": f"This is a mock AI response to: '{user_query}'",
-                "sources": []
-            }
-
-            return Response(mock_response, status=status.HTTP_200_OK)
+            return Response(response_data, status=status.HTTP_200_OK)
