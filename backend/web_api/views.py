@@ -5,7 +5,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
 
 from rag.models import Document
-from rag.services import IngestionService, CharOrchestrationService
+from rag.services import IngestionService, ChatOrchestrationService
 from .serializers import DocumentSerializer, ChatQuerySerializer
 
 
@@ -18,6 +18,8 @@ class DocumentViewSet(viewsets.ModelViewSet):
 
     # Accept file uploads (PDFs)
     parser_classes = [MultiPartParser, FormParser]
+    queryset = Document.objects.all()
+    serializer_class = DocumentSerializer
 
     def get_queryset(self):
         """

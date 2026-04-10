@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rag.models import Document
 
 
-class DocumentSerializer(serializers.ModelSeiralizer):
+class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = ['id', 'title', 's3_key', 'uploaded_at']

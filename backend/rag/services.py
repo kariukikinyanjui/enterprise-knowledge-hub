@@ -97,7 +97,7 @@ class ChatOrchestrationService:
 
         if not top_chunks:
             return {
-                "answer": "I couldn't find any relevant policies for your department to answer this."
+                "answer": "I couldn't find any relevant policies for your department to answer this.",
                 "sources": []
             }
 
