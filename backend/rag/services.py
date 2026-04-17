@@ -113,7 +113,7 @@ class ChatOrchestrationService:
 
         mock_llm_response = (
             f"Based on the internal documents, here is the answer to your query: '{query}'.\n\n"
-            f"Context analyzed:\n{content[:200]}..."
+            f"Context analyzed:\n{context[:200]}..."
         )
 
         return {

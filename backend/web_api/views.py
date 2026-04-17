@@ -65,8 +65,8 @@ class ChatAPIView(APIView):
                 status=status.HTTP_403_FORBIDDEN
             )
 
-            # Execute the Chat Orchestration Service
-            chat_service = ChatOrchestrationService()
-            response_data = chat_service.answer_query(user_query, tenant)
+        # Execute the Chat Orchestration Service
+        chat_service = ChatOrchestrationService()
+        response_data = chat_service.answer_query(user_query, tenant)
 
-            return Response(response_data, status=status.HTTP_200_OK)
+        return Response(response_data, status=status.HTTP_200_OK)
